@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow 
 
 params.exit = 0
-params.data = "256M"
+params.bytes = 268435456 // 256 MB
 params.times = 1
 
 process read_write {
@@ -9,8 +9,8 @@ process read_write {
   maxForks 1 
   input: val(x)
   """
-  echo "Reading and writing $params.data"
-  dd if=/dev/zero of=/dev/null bs=$params.data count=1
+  echo "Reading and writing $params.bytes bytes"
+  dd if=/dev/zero of=/dev/null count=$params.bytes iflag=count_bytes
   exit $params.exit
   """
 }
